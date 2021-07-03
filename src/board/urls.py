@@ -1,4 +1,4 @@
-from .views import board, start, add
+from .views import start, board, add
 from django.urls import path
 
 

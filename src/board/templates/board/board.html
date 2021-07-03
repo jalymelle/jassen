@@ -14,7 +14,6 @@
         <a href="{% url 'add' %}">Resultat Hinzufügen</a>
     </nav>
     </section>
-    <a href="{% url 'add' %}">Eingabe</a>
 
     <table>
         <th></th>
@@ -62,21 +61,21 @@
             <td></td>
             </tr>
             <tr>
-            <td>Ob</td>
+            <td>↓</td>
             <td>{{ team1.Ob|default_if_none:'&nbsp;' }}</td>
             <td>{{ team2.Ob|default_if_none:'&nbsp;' }}</td>
             <td></td>
             <td></td>
             </tr>
             <tr>
-            <td>Un</td>
+            <td>↑</td>
             <td>{{ team1.Un|default_if_none:'&nbsp;' }}</td>
             <td>{{ team2.Un|default_if_none:'&nbsp;' }}</td>
             <td></td>
             <td></td>
             </tr>
             <tr>
-            <td>Sl</td>
+            <td>☇</td>
             <td>{{ team1.Sl|default_if_none:'&nbsp;' }}</td>
             <td>{{ team2.Sl|default_if_none:'&nbsp;' }}</td>
             <td></td>

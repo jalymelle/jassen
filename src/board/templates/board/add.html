@@ -12,6 +12,10 @@
         <h1>Add</h1>
         <a href="{% url 'board' %}">Zurück</a>
     </nav>
-    <button class="save">Speichern</button>
+    <form action="{% url 'add' %}" method="post">
+        {% csrf_token %}
+        {{ form }}
+        <input type="submit" value="Speichern">
+    </form>
     </section>
 {% endblock content %} 
