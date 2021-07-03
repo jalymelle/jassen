@@ -10,9 +10,6 @@
     <nav class="navbar">
         <h1>Neues Spiel</h1>
     </nav>
-    {% if x %}
-     <h1>hello</h1>
-    {% endif %}
     <form action="{% url 'start' %}" method="post">
         {% csrf_token %}
         {{ form }}

@@ -5,6 +5,9 @@ from .models import JassTeam
 from .forms import TeamForm, AddForm
 
 # Create your views here.
+jassarten = ['Ei', 'Ro', 'Si', 'Se', 'Mi', 'Ob', 'Un', 'Sl', '4_5', 'wahl', '3_3', 'Ro12']
+
+
 def start(request):
     if request.method == 'POST':
         form = TeamForm(request.POST)
@@ -13,16 +16,17 @@ def start(request):
             name1 = form.cleaned_data.get('name1')
             name2 = form.cleaned_data.get('name2')
             cols = [name1, name2, 'total1', 'total2']
+            i = 0
             for col in cols:
-                JassTeam.objects.create(team_name=col)
+                JassTeam.objects.create(team_name=col, qr=i)
+                i += 1
             
-            return HttpResponseRedirect(reverse('board'), {'form': form})
+            return HttpResponseRedirect(reverse('board'))
     
     else:
         form = TeamForm()
-        print('here')
 
-    return render(request, 'board/start.html', )
+    return render(request, 'board/start.html', {'form': form})
 
 
 def add(request):
@@ -33,27 +37,40 @@ def add(request):
             field = form.cleaned_data.get('jass')
             points = form.cleaned_data.get('points')
             update(team, field, points)
-            
-            return HttpResponseRedirect(reverse('board') )
+
+            return HttpResponseRedirect(reverse('board'))
     
     else:
         form = AddForm()
 
     return render(request, 'board/add.html', {'form': form})
 
+
 def update(team, field, points):
     setattr(team, field, points)
     team.save()
 
-
+    field_object = JassTeam._meta.get_field(field)
+    value1 = field_object.value_from_object(JassTeam.objects.get(qr=0))
+    value2 = field_object.value_from_object(JassTeam.objects.get(qr=1))
+    total1 = JassTeam.objects.get(qr=2)
+    total2 = JassTeam.objects.get(qr=3)
+    if type(value1) == int and type(value2) == int:
+        if value1 > value2:
+            setattr(total1, field, (value1-value2) * (jassarten.index(field) +1))
+            total1.save()
+        else:
+            setattr(total2, field, (value2-value1) * (jassarten.index(field) +1))
+            total2.save()
+    
+    
 def board(request):
-    print(JassTeam.objects.all())
-    team1 = JassTeam.objects.get(id=1)
-    team2 = JassTeam.objects.get(id=2)
     
     context = {
         'numbers': '1',
-        'team1': team1,
-        'team2': team2}
+        'team1': JassTeam.objects.get(qr=0),
+        'team2': JassTeam.objects.get(qr=1),
+        'total1': JassTeam.objects.get(qr=2),
+        'total2': JassTeam.objects.get(qr=3)}
         
     return render(request, 'board/board.html', context)
