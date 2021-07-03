@@ -1,0 +1,21 @@
+{% extends 'board/base.html' %}
+{% load static %}
+
+{% block title %} 
+<!-- <link rel="stylesheet" href="{% static 'charts/chart.css' %}"> -->
+<title>Start</title>
+{% endblock title %}
+
+{% block content %}
+    <nav class="navbar">
+        <h1>Neues Spiel</h1>
+    </nav>
+    {% if x %}
+     <h1>hello</h1>
+    {% endif %}
+    <form action="{% url 'start' %}" method="post">
+        {% csrf_token %}
+        {{ form }}
+        <input type="submit" value="Starten">
+    </form>
+{% endblock content %}

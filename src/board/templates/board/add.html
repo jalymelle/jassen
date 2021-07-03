@@ -1,0 +1,17 @@
+{% extends 'board/base.html' %}
+{% load static %}
+
+{% block title %} 
+<!-- <link rel="stylesheet" href="{% static 'charts/chart.css' %}"> -->
+<title>Resultat Hinzufügen</title>
+{% endblock title %}
+
+{% block content %}
+    <section class="section_1">
+    <nav class="navbar">
+        <h1>Add</h1>
+        <a href="{% url 'board' %}">Zurück</a>
+    </nav>
+    <button class="save">Speichern</button>
+    </section>
+{% endblock content %} 
