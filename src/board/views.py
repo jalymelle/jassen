@@ -20,22 +20,11 @@ def start(request):
 def board(request):
     team1 = JassTeam.objects.get(id=1)
     team2 = JassTeam.objects.get(id=2)
-
-    fields = JassTeam._meta.get_fields()
-    fields = fields[1:]
-    names = [field.name for field in fields]
-    fields_1 = []
-    fields_2 = []
-
-    for name in names:
-        field_object = JassTeam._meta.get_field(name)
-        fields_1.append(field_object.value_from_object(team1))
-        fields_2.append(field_object.value_from_object(team2))
     
     
     context = {
-        'names': names, 
-        'team1': fields_1,
+        'numbers': '1', 
+        'team1': team1,
         'team2': team2}
         
     return render(request, 'board/board.html', context)

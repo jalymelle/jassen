@@ -1,11 +1,69 @@
 <h1>Hello</h1>
-<h1>{{fields_1.0}}</h1>
 
 <table>
+    <th></th>
+    <th>{{team1.team_name}}</th>
+    <th>{{team2.team_name}}</th>
     {% for name in names %}
+        <th>name</th>
+    {% endfor %}
+    
+    {% for num in numbers %}
         <tr>
-        <td>{{name}}</td>
-        <td>{{ x }}</td>
+        <td>Ei</td>
+        <td>{{ team1.Ei|default_if_none:'&nbsp;' }}</td>
+        <td>{{ team2.Ei|default_if_none:'&nbsp;' }}</td>
         </tr>
+        <tr>
+        <td>Ro</td>
+        <td>{{ team1.Ro|default_if_none:'&nbsp;' }}</td>
+        <td>{{ team2.Ro|default_if_none:'&nbsp;' }}</td>
+        </tr>
+        <tr>
+        <td>Si</td>
+        <td>{{ team1.Si|default_if_none:'&nbsp;' }}</td>
+        <td>{{ team2.Si|default_if_none:'&nbsp;' }}</td>
+        </tr>
+        <tr>
+        <td>Se</td>
+        <td>{{ team1.Se|default_if_none:'&nbsp;' }}</td>
+        <td>{{ team2.Se|default_if_none:'&nbsp;' }}</td>
+        </tr>
+        <tr>
+        <td>Ob</td>
+        <td>{{ team1.Ob|default_if_none:'&nbsp;' }}</td>
+        <td>{{ team2.Ob|default_if_none:'&nbsp;' }}</td>
+        </tr>
+        <tr>
+        <td>Un</td>
+        <td>{{ team1.Un|default_if_none:'&nbsp;' }}</td>
+        <td>{{ team2.Un|default_if_none:'&nbsp;' }}</td>
+        </tr>
+        <tr>
+        <td>Sl</td>
+        <td>{{ team1.Sl|default_if_none:'&nbsp;' }}</td>
+        <td>{{ team2.Sl|default_if_none:'&nbsp;' }}</td>
+        </tr>
+        <tr>
+        <td>4/5</td>
+        <td>{{ team1.4_5|default_if_none:'&nbsp;' }}</td>
+        <td>{{ team2.4_5|default_if_none:'&nbsp;' }}</td>
+        </tr>
+        <tr>
+        <td>?</td>
+        <td>{{ team1.wahl|default_if_none:'&nbsp;' }}</td>
+        <td>{{ team2.wahl|default_if_none:'&nbsp;' }}</td>
+        </tr>
+        <tr>
+        <td>3/3</td>
+        <td>{{ team1.3_3|default_if_none:'&nbsp;' }}</td>
+        <td>{{ team2.3_3|default_if_none:'&nbsp;' }}</td>
+        </tr>
+        <tr>
+        <td>Ro</td>
+        <td>{{ team1.Ro12|default_if_none:'&nbsp;' }}</td>
+        <td>{{ team2.Ro12|default_if_none:'&nbsp;' }}</td>
+        </tr>
+        <tr>
     {% endfor %}
 </table>
