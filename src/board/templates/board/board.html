@@ -2,18 +2,15 @@
 {% load static %}
 
 {% block title %} 
-<!-- <link rel="stylesheet" href="{% static 'charts/chart.css' %}"> -->
+<link rel="stylesheet" href="{% static 'board/bse.css' %}">
 <title>Resultate</title>
 {% endblock title %}
 
 {% block content %}
-    <section class="section_1">
     <nav class="navbar">
-        <h1>Spiel</h1>
         <a href="{% url 'start' %}">Neues Spiel</a>
         <a href="{% url 'add' %}">Resultat Hinzufügen</a>
     </nav>
-    </section>
 
     <table>
         <th></th>
@@ -107,6 +104,13 @@
             <td>{{ team2.Ro12|default_if_none:'&nbsp;' }}</td>
             <td>{{ total1.Ro12|default_if_none:'&nbsp;' }}</td>
             <td>{{ total2.Ro12|default_if_none:'&nbsp;' }}</td>
+            </tr>
+            <tr>
+            <td>Ges</td>
+            <td></td>
+            <td></td>
+            <td>{{ number1 }}</td>
+            <td>{{ number2 }}</td>
             </tr>
 
         {% endfor %}

@@ -6,6 +6,7 @@ from .forms import TeamForm, AddForm
 
 # Create your views here.
 jassarten = ['Ei', 'Ro', 'Si', 'Se', 'Mi', 'Ob', 'Un', 'Sl', '4_5', 'wahl', '3_3', 'Ro12']
+total = [0, 0]
 
 
 def start(request):
@@ -59,11 +60,13 @@ def update(team, field, points):
         if value1 > value2:
             setattr(total1, field, (value1-value2) * (jassarten.index(field) +1))
             total1.save()
+            total[0] += (value1-value2) * (jassarten.index(field) +1)
         else:
             setattr(total2, field, (value2-value1) * (jassarten.index(field) +1))
             total2.save()
+            total[1] += (value2-value1) * (jassarten.index(field) +1)
     
-    
+
 def board(request):
     
     context = {
@@ -71,6 +74,8 @@ def board(request):
         'team1': JassTeam.objects.get(qr=0),
         'team2': JassTeam.objects.get(qr=1),
         'total1': JassTeam.objects.get(qr=2),
-        'total2': JassTeam.objects.get(qr=3)}
+        'total2': JassTeam.objects.get(qr=3),
+        'number1': total[0],
+        'number2': total[1]}
         
     return render(request, 'board/board.html', context)
