@@ -2,20 +2,19 @@
 {% load static %}
 
 {% block title %} 
-<!-- <link rel="stylesheet" href="{% static 'charts/chart.css' %}"> -->
+<link rel="stylesheet" href="{% static 'board/base.css' %}">
 <title>Resultat Hinzufügen</title>
 {% endblock title %}
 
 {% block content %}
     <section class="section_1">
     <nav class="navbar">
-        <h1>Add</h1>
         <a href="{% url 'board' %}">Zurück</a>
     </nav>
     <form action="{% url 'add' %}" method="post">
         {% csrf_token %}
         {{ form }}
-        <input type="submit" value="Speichern">
+        <input class="button" type="submit" value="Speichern">
     </form>
     </section>
 {% endblock content %} 

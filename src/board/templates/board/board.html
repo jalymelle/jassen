@@ -2,7 +2,7 @@
 {% load static %}
 
 {% block title %} 
-<link rel="stylesheet" href="{% static 'board/bse.css' %}">
+<link rel="stylesheet" href="{% static 'board/base.css' %}">
 <title>Resultate</title>
 {% endblock title %}
 
@@ -13,104 +13,104 @@
     </nav>
 
     <table>
-        <th></th>
-        <th>{{team1.team_name}}</th>
-        <th>{{team2.team_name}}</th>
-        <th>Total 1</th>
-        <th>Total 2</th>
+        <th class="white"></th>
+        <th class="white">{{team1.team_name}}</th>
+        <th class="white">{{team2.team_name}}</th>
+        <th class="white">Total 1</th>
+        <th class="white">Total 2</th>
         
         {% for num in numbers %}
             <tr>
-            <td>Ei</td>
-            <td>{{ team1.Ei|default_if_none:'&nbsp;' }}</td>
-            <td>{{ team2.Ei|default_if_none:'&nbsp;' }}</td>
-            <td>{{ total1.Ei|default_if_none:'&nbsp;' }}</td>
-            <td>{{ total2.Ei|default_if_none:'&nbsp;' }}</td>
+            <td class="white">Ei</td>
+            <td class="white">{{ team1.Ei|default_if_none:'&nbsp;' }}</td>
+            <td class="white">{{ team2.Ei|default_if_none:'&nbsp;' }}</td>
+            <td class="white">{{ total1.Ei|default_if_none:'&nbsp;' }}</td>
+            <td class="white">{{ total2.Ei|default_if_none:'&nbsp;' }}</td>
             </tr>
             <tr>
-            <td>Ro</td>
-            <td>{{ team1.Ro|default_if_none:'&nbsp;' }}</td>
-            <td>{{ team2.Ro|default_if_none:'&nbsp;' }}</td>
-            <td>{{ total1.Ro|default_if_none:'&nbsp;' }}</td>
-            <td>{{ total2.Ro|default_if_none:'&nbsp;' }}</td>
+            <td class="white">Ro</td>
+            <td class="white">{{ team1.Ro|default_if_none:'&nbsp;' }}</td>
+            <td class="white">{{ team2.Ro|default_if_none:'&nbsp;' }}</td>
+            <td class="white">{{ total1.Ro|default_if_none:'&nbsp;' }}</td>
+            <td class="white">{{ total2.Ro|default_if_none:'&nbsp;' }}</td>
             </tr>
             <tr>
-            <td>Si</td>
-            <td>{{ team1.Si|default_if_none:'&nbsp;' }}</td>
-            <td>{{ team2.Si|default_if_none:'&nbsp;' }}</td>
-            <td>{{ total1.Si|default_if_none:'&nbsp;' }}</td>
-            <td>{{ total2.Si|default_if_none:'&nbsp;' }}</td>
+            <td class="white">Si</td>
+            <td class="white">{{ team1.Si|default_if_none:'&nbsp;' }}</td>
+            <td class="white">{{ team2.Si|default_if_none:'&nbsp;' }}</td>
+            <td class="white">{{ total1.Si|default_if_none:'&nbsp;' }}</td>
+            <td class="white">{{ total2.Si|default_if_none:'&nbsp;' }}</td>
             </tr>
             <tr>
-            <td>Se</td>
-            <td>{{ team1.Se|default_if_none:'&nbsp;' }}</td>
-            <td>{{ team2.Se|default_if_none:'&nbsp;' }}</td>
-            <td>{{ total1.Se|default_if_none:'&nbsp;' }}</td>
-            <td>{{ total2.Se|default_if_none:'&nbsp;' }}</td>
+            <td class="white">Se</td>
+            <td class="white">{{ team1.Se|default_if_none:'&nbsp;' }}</td>
+            <td class="white">{{ team2.Se|default_if_none:'&nbsp;' }}</td>
+            <td class="white">{{ total1.Se|default_if_none:'&nbsp;' }}</td>
+            <td class="white">{{ total2.Se|default_if_none:'&nbsp;' }}</td>
             </tr>
             <tr>
             <tr>
-            <td>Mi</td>
-            <td>{{ team1.Mi|default_if_none:'&nbsp;' }}</td>
-            <td>{{ team2.Mi|default_if_none:'&nbsp;' }}</td>
-            <td>{{ total1.Mi|default_if_none:'&nbsp;' }}</td>
-            <td>{{ total2.Mi|default_if_none:'&nbsp;' }}</td>
+            <td class="white">Mi</td>
+            <td class="white">{{ team1.Mi|default_if_none:'&nbsp;' }}</td>
+            <td class="white">{{ team2.Mi|default_if_none:'&nbsp;' }}</td>
+            <td class="white">{{ total1.Mi|default_if_none:'&nbsp;' }}</td>
+            <td class="white">{{ total2.Mi|default_if_none:'&nbsp;' }}</td>
             </tr>
             <tr>
-            <td>↓</td>
-            <td>{{ team1.Ob|default_if_none:'&nbsp;' }}</td>
-            <td>{{ team2.Ob|default_if_none:'&nbsp;' }}</td>
-            <td>{{ total1.Ob|default_if_none:'&nbsp;' }}</td>
-            <td>{{ total2.Ob|default_if_none:'&nbsp;' }}</td>
+            <td class="white">↓</td>
+            <td class="white">{{ team1.Ob|default_if_none:'&nbsp;' }}</td>
+            <td class="white">{{ team2.Ob|default_if_none:'&nbsp;' }}</td>
+            <td class="white">{{ total1.Ob|default_if_none:'&nbsp;' }}</td>
+            <td class="white">{{ total2.Ob|default_if_none:'&nbsp;' }}</td>
             </tr>
             <tr>
-            <td>↑</td>
-            <td>{{ team1.Un|default_if_none:'&nbsp;' }}</td>
-            <td>{{ team2.Un|default_if_none:'&nbsp;' }}</td>
-            <td>{{ total1.Un|default_if_none:'&nbsp;' }}</td>
-            <td>{{ total2.Un|default_if_none:'&nbsp;' }}</td>
+            <td class="white">↑</td>
+            <td class="white">{{ team1.Un|default_if_none:'&nbsp;' }}</td>
+            <td class="white">{{ team2.Un|default_if_none:'&nbsp;' }}</td>
+            <td class="white">{{ total1.Un|default_if_none:'&nbsp;' }}</td>
+            <td class="white">{{ total2.Un|default_if_none:'&nbsp;' }}</td>
             </tr>
             <tr>
-            <td>☇</td>
-            <td>{{ team1.Sl|default_if_none:'&nbsp;' }}</td>
-            <td>{{ team2.Sl|default_if_none:'&nbsp;' }}</td>
-            <td>{{ total1.Sl|default_if_none:'&nbsp;' }}</td>
-            <td>{{ total2.Sl|default_if_none:'&nbsp;' }}</td>
+            <td class="white">☇</td>
+            <td class="white">{{ team1.Sl|default_if_none:'&nbsp;' }}</td>
+            <td class="white">{{ team2.Sl|default_if_none:'&nbsp;' }}</td>
+            <td class="white">{{ total1.Sl|default_if_none:'&nbsp;' }}</td>
+            <td class="white">{{ total2.Sl|default_if_none:'&nbsp;' }}</td>
             </tr>
             <tr>
-            <td>4/5</td>
-            <td>{{ team1.4_5|default_if_none:'&nbsp;' }}</td>
-            <td>{{ team2.4_5|default_if_none:'&nbsp;' }}</td>
-            <td>{{ total1.4_5|default_if_none:'&nbsp;' }}</td>
-            <td>{{ total2.4_5|default_if_none:'&nbsp;' }}</td>
+            <td class="white">4/5</td>
+            <td class="white">{{ team1.4_5|default_if_none:'&nbsp;' }}</td>
+            <td class="white">{{ team2.4_5|default_if_none:'&nbsp;' }}</td>
+            <td class="white">{{ total1.4_5|default_if_none:'&nbsp;' }}</td>
+            <td class="white">{{ total2.4_5|default_if_none:'&nbsp;' }}</td>
             </tr>
             <tr>
-            <td>?</td>
-            <td>{{ team1.wahl|default_if_none:'&nbsp;' }}</td>
-            <td>{{ team2.wahl|default_if_none:'&nbsp;' }}</td>
-            <td>{{ total1.wahl|default_if_none:'&nbsp;' }}</td>
-            <td>{{ total2.wahl|default_if_none:'&nbsp;' }}</td>
+            <td class="white">?</td>
+            <td class="white">{{ team1.wahl|default_if_none:'&nbsp;' }}</td>
+            <td class="white">{{ team2.wahl|default_if_none:'&nbsp;' }}</td>
+            <td class="white">{{ total1.wahl|default_if_none:'&nbsp;' }}</td>
+            <td class="white">{{ total2.wahl|default_if_none:'&nbsp;' }}</td>
             </tr>
             <tr>
-            <td>3/3</td>
-            <td>{{ team1.3_3|default_if_none:'&nbsp;' }}</td>
-            <td>{{ team2.3_3|default_if_none:'&nbsp;' }}</td>
-            <td>{{ total1.3_3|default_if_none:'&nbsp;' }}</td>
-            <td>{{ total2.3_3|default_if_none:'&nbsp;' }}</td>
+            <td class="white">3/3</td>
+            <td class="white">{{ team1.3_3|default_if_none:'&nbsp;' }}</td>
+            <td class="white">{{ team2.3_3|default_if_none:'&nbsp;' }}</td>
+            <td class="white">{{ total1.3_3|default_if_none:'&nbsp;' }}</td>
+            <td class="white">{{ total2.3_3|default_if_none:'&nbsp;' }}</td>
             </tr>
             <tr>
-            <td>Ro</td>
-            <td>{{ team1.Ro12|default_if_none:'&nbsp;' }}</td>
-            <td>{{ team2.Ro12|default_if_none:'&nbsp;' }}</td>
-            <td>{{ total1.Ro12|default_if_none:'&nbsp;' }}</td>
-            <td>{{ total2.Ro12|default_if_none:'&nbsp;' }}</td>
+            <td class="white">Ro</td>
+            <td class="white">{{ team1.Ro12|default_if_none:'&nbsp;' }}</td>
+            <td class="white">{{ team2.Ro12|default_if_none:'&nbsp;' }}</td>
+            <td class="white">{{ total1.Ro12|default_if_none:'&nbsp;' }}</td>
+            <td class="white">{{ total2.Ro12|default_if_none:'&nbsp;' }}</td>
             </tr>
             <tr>
-            <td>Ges</td>
-            <td></td>
-            <td></td>
-            <td>{{ number1 }}</td>
-            <td>{{ number2 }}</td>
+            <td class="white">Ges</td>
+            <td class="white"></td>
+            <td class="white"></td>
+            <td class="white">{{ number1 }}</td>
+            <td class="white">{{ number2 }}</td>
             </tr>
 
         {% endfor %}

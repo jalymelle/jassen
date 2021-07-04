@@ -60,11 +60,11 @@ def update(team, field, points):
         if value1 > value2:
             setattr(total1, field, (value1-value2) * (jassarten.index(field) +1))
             total1.save()
-            total[0] += (value1-value2) * (jassarten.index(field) +1)
+            total[0] += (value1-value2) * (jassarten.index(field) +1) + 10
         else:
             setattr(total2, field, (value2-value1) * (jassarten.index(field) +1))
             total2.save()
-            total[1] += (value2-value1) * (jassarten.index(field) +1)
+            total[1] += (value2-value1) * (jassarten.index(field) +1) + 10
     
 
 def board(request):

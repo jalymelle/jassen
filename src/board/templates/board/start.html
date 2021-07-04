@@ -2,7 +2,7 @@
 {% load static %}
 
 {% block title %} 
-<!-- <link rel="stylesheet" href="{% static 'charts/chart.css' %}"> -->
+<link rel="stylesheet" href="{% static 'board/base.css' %}">
 <title>Start</title>
 {% endblock title %}
 
@@ -13,6 +13,6 @@
     <form action="{% url 'start' %}" method="post">
         {% csrf_token %}
         {{ form }}
-        <input type="submit" value="Starten">
+        <input class="button" type="submit" value="Starten">
     </form>
 {% endblock content %}
