@@ -2,25 +2,32 @@ from django.shortcuts import render
 from django.http import HttpResponseRedirect
 from django.urls import reverse
 from .models import JassTeam
-from .forms import TeamForm, AddForm
+from .forms import TeamForm, AddForm, update_AddForm
 
 # Create your views here.
 jassarten = ['Ei', 'Ro', 'Si', 'Se', 'Mi', 'Ob', 'Un', 'Sl', '4_5', 'wahl', '3_3', 'Ro12']
 total = [0, 0]
 
-
 def start(request):
     if request.method == 'POST':
         form = TeamForm(request.POST)
         if form.is_valid():
-            JassTeam.objects.all().delete()
             name1 = form.cleaned_data.get('name1')
             name2 = form.cleaned_data.get('name2')
-            cols = [name1, name2, 'total1', 'total2']
-            i = 0
-            for col in cols:
-                JassTeam.objects.create(team_name=col, qr=i)
-                i += 1
+            team1 = JassTeam.objects.get(qr=0)
+            team2 = JassTeam.objects.get(qr=1)
+            total[0], total[1] = 0, 0
+            setattr(team1, 'team_name', name1)
+            team1.save()
+            setattr(team2, 'team_name', name2)
+            team2.save()
+            update_AddForm()
+            print(AddForm())
+            for q in range (4):
+                col = JassTeam.objects.get(qr=q)
+                for jassart in jassarten:
+                    setattr(col, jassart, None)
+                col.save()
             
             return HttpResponseRedirect(reverse('board'))
     
@@ -58,11 +65,11 @@ def update(team, field, points):
     total2 = JassTeam.objects.get(qr=3)
     if type(value1) == int and type(value2) == int:
         if value1 > value2:
-            setattr(total1, field, (value1-value2) * (jassarten.index(field) +1))
+            setattr(total1, field, (value1-value2) * (jassarten.index(field) +1) + 10)
             total1.save()
             total[0] += (value1-value2) * (jassarten.index(field) +1) + 10
         else:
-            setattr(total2, field, (value2-value1) * (jassarten.index(field) +1))
+            setattr(total2, field, (value2-value1) * (jassarten.index(field) +1) + 10)
             total2.save()
             total[1] += (value2-value1) * (jassarten.index(field) +1) + 10
     
