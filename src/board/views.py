@@ -44,7 +44,8 @@ def add(request):
             team = JassTeam.objects.get(team_name=form.cleaned_data.get('team')) 
             field = form.cleaned_data.get('jass')
             points = form.cleaned_data.get('points')
-            update(team, field, points)
+            match = form.cleaned_data.get('match')
+            update(team, field, points, match)
 
             return HttpResponseRedirect(reverse('board'))
     
@@ -54,7 +55,7 @@ def add(request):
     return render(request, 'board/add.html', {'form': form})
 
 
-def update(team, field, points):
+def update(team, field, points, match):
     setattr(team, field, points)
     team.save()
 
@@ -65,13 +66,30 @@ def update(team, field, points):
     total2 = JassTeam.objects.get(qr=3)
     if type(value1) == int and type(value2) == int:
         if value1 > value2:
-            setattr(total1, field, (value1-value2) * (jassarten.index(field) +1) + 10)
-            total1.save()
+            if match:
+                setattr(total1, field, (value1-value2) * (jassarten.index(field) +1) + 20)
+            else:
+                setattr(total1, field, (value1-value2) * (jassarten.index(field) +1) + 20)
+            setattr(total2, field, None)
             total[0] += (value1-value2) * (jassarten.index(field) +1) + 10
-        else:
+        elif value2 > value1:
             setattr(total2, field, (value2-value1) * (jassarten.index(field) +1) + 10)
-            total2.save()
+            setattr(total1, field, None)
             total[1] += (value2-value1) * (jassarten.index(field) +1) + 10
+        total1.save()
+        total2.save()
+        total[0], total[1] = 0, 0
+        for jassart in jassarten:
+            t1 = getattr(total1, jassart)
+            t2 = getattr(total2, jassart)
+            if t1 != None:
+                total[0] += t1
+            if t2 != None:
+                total[1] += t2
+
+    if match: 
+        setattr(team, field, points*10)
+        team.save()
     
 
 def board(request):

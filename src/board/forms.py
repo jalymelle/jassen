@@ -34,5 +34,6 @@ class AddForm(forms.Form):
     team = forms.ModelChoiceField(label='Team', queryset=JassTeam.objects.all())
     jass = forms.CharField(label='Jass', widget=forms.Select(choices=jassarten))
     points = forms.IntegerField(label='Punkte', min_value=0, max_value=16)
+    match = forms.BooleanField(label='Match', required=False)
 
 
