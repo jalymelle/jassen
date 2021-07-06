@@ -56,7 +56,10 @@ def add(request):
 
 
 def update(team, field, points, match):
-    setattr(team, field, points)
+    if match: 
+        setattr(team, field, 17)
+    else:
+        setattr(team, field, points)
     team.save()
 
     field_object = JassTeam._meta.get_field(field)
@@ -66,16 +69,22 @@ def update(team, field, points, match):
     total2 = JassTeam.objects.get(qr=3)
     if type(value1) == int and type(value2) == int:
         if value1 > value2:
-            if match:
-                setattr(total1, field, (value1-value2) * (jassarten.index(field) +1) + 20)
+            if value1 == 17:
+                setattr(total1, field, (16-value2) * (jassarten.index(field) +1) + 20)
             else:
-                setattr(total1, field, (value1-value2) * (jassarten.index(field) +1) + 20)
+                setattr(total1, field, (value1-value2) * (jassarten.index(field) +1) + 10)
             setattr(total2, field, None)
-            total[0] += (value1-value2) * (jassarten.index(field) +1) + 10
         elif value2 > value1:
-            setattr(total2, field, (value2-value1) * (jassarten.index(field) +1) + 10)
+            if value2 == 17:
+                setattr(total2, field, (16-value1) * (jassarten.index(field) +1) + 20)
+            else:
+                setattr(total2, field, (value2-value1) * (jassarten.index(field) +1) + 10)
             setattr(total1, field, None)
-            total[1] += (value2-value1) * (jassarten.index(field) +1) + 10
+        
+        else:
+            setattr(total1, field, None)
+            setattr(total2, field, None)
+
         total1.save()
         total2.save()
         total[0], total[1] = 0, 0
@@ -87,9 +96,6 @@ def update(team, field, points, match):
             if t2 != None:
                 total[1] += t2
 
-    if match: 
-        setattr(team, field, points*10)
-        team.save()
     
 
 def board(request):
