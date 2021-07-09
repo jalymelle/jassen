@@ -8,7 +8,8 @@ class JassTeam(models.Model):
     def __str__(self):
         return f'{self.team_name}'
 
-
-labels = ['Ei', 'Ro', 'Si', 'Se', 'Mi', 'Ob', 'Un', 'Sl', '4_5', 'wahl', '3_3', 'Ro12']
-for label in labels:
-    JassTeam.add_to_class(label, models.IntegerField(null=True, blank=True, default=None))
+def create_model(length):
+    for i in range(int(length)):
+        labels = ['Ei', 'Ro', 'Si', 'Se', 'Mi', 'Ob', 'Un', 'Sl', '4_5', 'wahl', '3_3', 'Ro12']
+        for label in labels:
+            JassTeam.add_to_class(label, models.IntegerField(null=True, blank=True, default=None))

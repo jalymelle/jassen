@@ -1,12 +1,13 @@
 from django.shortcuts import render
 from django.http import HttpResponseRedirect
 from django.urls import reverse
-from .models import JassTeam
+from .models import JassTeam, create_model
 from .forms import TeamForm, AddForm, update_AddForm
 
 # Create your views here.
 jassarten = ['Ei', 'Ro', 'Si', 'Se', 'Mi', 'Ob', 'Un', 'Sl', '4_5', 'wahl', '3_3', 'Ro12']
 total = [0, 0]
+lengths = []
 
 def start(request):
     if request.method == 'POST':
@@ -14,6 +15,9 @@ def start(request):
         if form.is_valid():
             name1 = form.cleaned_data.get('name1')
             name2 = form.cleaned_data.get('name2')
+            length = form.cleaned_data.get('length')
+            lengths.append(int(length))
+            create_model(length)
             team1 = JassTeam.objects.get(qr=0)
             team2 = JassTeam.objects.get(qr=1)
             total[0], total[1] = 0, 0
@@ -22,13 +26,13 @@ def start(request):
             setattr(team2, 'team_name', name2)
             team2.save()
             update_AddForm()
-            print(AddForm())
             for q in range (4):
                 col = JassTeam.objects.get(qr=q)
                 for jassart in jassarten:
                     setattr(col, jassart, None)
                 col.save()
             
+            print(JassTeam._meta.get_fields())
             return HttpResponseRedirect(reverse('board'))
     
     else:
@@ -99,9 +103,13 @@ def update(team, field, points, match):
     
 
 def board(request):
+    print(lengths[-1])
+    numbers = ''
+    for i in range(lengths[-1]):
+        numbers += '1'
     
     context = {
-        'numbers': '1',
+        'numbers': numbers,
         'team1': JassTeam.objects.get(qr=0),
         'team2': JassTeam.objects.get(qr=1),
         'total1': JassTeam.objects.get(qr=2),

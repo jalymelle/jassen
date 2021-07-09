@@ -106,14 +106,13 @@
             <td class="white">{{ total2.Ro12|default_if_none:'&nbsp;' }}</td>
             </tr>
             <tr>
-            <td class="white">Ges</td>
+        {% endfor %}
+        <td class="white">Ges</td>
             <td class="white"></td>
             <td class="white"></td>
             <td class="white">{{ number1 }}</td>
             <td class="white">{{ number2 }}</td>
             </tr>
-
-        {% endfor %}
     </table>
 
 {% endblock content %} 
