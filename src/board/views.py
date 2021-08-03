@@ -1,13 +1,13 @@
 from django.shortcuts import render
 from django.http import HttpResponseRedirect
 from django.urls import reverse
-from .models import JassTeam, create_model
-from .forms import TeamForm, AddForm, update_AddForm
+from .models import JassTeam, all_fields, codes
+from .forms import TeamForm, AddForm 
 
 # Create your views here.
 jassarten = ['Ei', 'Ro', 'Si', 'Se', 'Mi', 'Ob', 'Un', 'Sl', '4_5', 'wahl', '3_3', 'Ro12']
 total = [0, 0]
-lengths = []
+number = [1]
 
 def start(request):
     if request.method == 'POST':
@@ -15,9 +15,7 @@ def start(request):
         if form.is_valid():
             name1 = form.cleaned_data.get('name1')
             name2 = form.cleaned_data.get('name2')
-            length = form.cleaned_data.get('length')
-            lengths.append(int(length))
-            create_model(length)
+            number[0] = form.cleaned_data.get('length')
             team1 = JassTeam.objects.get(qr=0)
             team2 = JassTeam.objects.get(qr=1)
             total[0], total[1] = 0, 0
@@ -25,14 +23,12 @@ def start(request):
             team1.save()
             setattr(team2, 'team_name', name2)
             team2.save()
-            update_AddForm()
             for q in range (4):
                 col = JassTeam.objects.get(qr=q)
                 for jassart in jassarten:
                     setattr(col, jassart, None)
                 col.save()
             
-            print(JassTeam._meta.get_fields())
             return HttpResponseRedirect(reverse('board'))
     
     else:
@@ -103,18 +99,22 @@ def update(team, field, points, match):
     
 
 def board(request):
-    print(lengths[-1])
-    numbers = ''
-    for i in range(lengths[-1]):
-        numbers += '1'
-    
+    data = []
+    for field in all_fields:
+        data_row = []
+        data_row.append(codes[field[:-2]] + ' ' + field[-1])
+        for i in range(4):
+            data_row.append(getattr(JassTeam.objects.get(qr=i), field))
+        data.append(data_row)
+
+    print(data)
     context = {
-        'numbers': numbers,
         'team1': JassTeam.objects.get(qr=0),
         'team2': JassTeam.objects.get(qr=1),
         'total1': JassTeam.objects.get(qr=2),
         'total2': JassTeam.objects.get(qr=3),
         'number1': total[0],
-        'number2': total[1]}
+        'number2': total[1],
+        'data': data}
         
     return render(request, 'board/board.html', context)

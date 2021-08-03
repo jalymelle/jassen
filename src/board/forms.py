@@ -1,25 +1,17 @@
 from django import forms
-from .models import JassTeam
+from .models import JassTeam, all_fields, codes
 
 class TeamForm(forms.Form):
     name1 = forms.CharField(label='Name Team 1', max_length=10)
     name2 = forms.CharField(label='Name Team 2', max_length=10)
-    length = forms.CharField(label='Anzahl Tafeln', max_length=4)
+    length = forms.IntegerField(label='Anzahl Tafeln', max_value=3)
 
-jassarten = [
-    ('Ei', 'Ei'),
-    ('Ro', 'Ro'),
-    ('Si', 'Si'),
-    ('Se', 'Se'),
-    ('Mi', 'Mi'),
-    ('Ob', '↓'),
-    ('Un', '↑'),
-    ('Sl', '☇'),
-    ('4_5', '4/5'),
-    ('wahl', '?'),
-    ('3_3', '3/3'),
-    ('Ro12', 'Ro'),
-]
+
+jassarten = []
+for jassart in all_fields:
+    option = (jassart, codes[jassart[:-2]] + ' ' + jassart[-1])
+    jassarten.append(option)
+        
 
 teams = []
 
@@ -36,5 +28,10 @@ class AddForm(forms.Form):
     jass = forms.CharField(label='Jass', widget=forms.Select(choices=jassarten))
     points = forms.IntegerField(label='Punkte', min_value=0, max_value=16)
     match = forms.BooleanField(label='Match', required=False)
+    
+
+
+
+
 
 

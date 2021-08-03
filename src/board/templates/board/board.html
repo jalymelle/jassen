@@ -19,100 +19,20 @@
         <th class="white">Total 1</th>
         <th class="white">Total 2</th>
         
-        {% for num in numbers %}
+        {% for row in data %}
             <tr>
-            <td class="white">Ei</td>
-            <td class="white">{{ team1.Ei|default_if_none:'&nbsp;' }}</td>
-            <td class="white">{{ team2.Ei|default_if_none:'&nbsp;' }}</td>
-            <td class="white">{{ total1.Ei|default_if_none:'&nbsp;' }}</td>
-            <td class="white">{{ total2.Ei|default_if_none:'&nbsp;' }}</td>
+            {% for i in row  %}
+                <td class="white">{{ i|default_if_none:'&nbsp;' }}</td>
+            {% endfor %}
             </tr>
-            <tr>
-            <td class="white">Ro</td>
-            <td class="white">{{ team1.Ro|default_if_none:'&nbsp;' }}</td>
-            <td class="white">{{ team2.Ro|default_if_none:'&nbsp;' }}</td>
-            <td class="white">{{ total1.Ro|default_if_none:'&nbsp;' }}</td>
-            <td class="white">{{ total2.Ro|default_if_none:'&nbsp;' }}</td>
-            </tr>
-            <tr>
-            <td class="white">Si</td>
-            <td class="white">{{ team1.Si|default_if_none:'&nbsp;' }}</td>
-            <td class="white">{{ team2.Si|default_if_none:'&nbsp;' }}</td>
-            <td class="white">{{ total1.Si|default_if_none:'&nbsp;' }}</td>
-            <td class="white">{{ total2.Si|default_if_none:'&nbsp;' }}</td>
-            </tr>
-            <tr>
-            <td class="white">Se</td>
-            <td class="white">{{ team1.Se|default_if_none:'&nbsp;' }}</td>
-            <td class="white">{{ team2.Se|default_if_none:'&nbsp;' }}</td>
-            <td class="white">{{ total1.Se|default_if_none:'&nbsp;' }}</td>
-            <td class="white">{{ total2.Se|default_if_none:'&nbsp;' }}</td>
-            </tr>
-            <tr>
-            <tr>
-            <td class="white">Mi</td>
-            <td class="white">{{ team1.Mi|default_if_none:'&nbsp;' }}</td>
-            <td class="white">{{ team2.Mi|default_if_none:'&nbsp;' }}</td>
-            <td class="white">{{ total1.Mi|default_if_none:'&nbsp;' }}</td>
-            <td class="white">{{ total2.Mi|default_if_none:'&nbsp;' }}</td>
-            </tr>
-            <tr>
-            <td class="white">↓</td>
-            <td class="white">{{ team1.Ob|default_if_none:'&nbsp;' }}</td>
-            <td class="white">{{ team2.Ob|default_if_none:'&nbsp;' }}</td>
-            <td class="white">{{ total1.Ob|default_if_none:'&nbsp;' }}</td>
-            <td class="white">{{ total2.Ob|default_if_none:'&nbsp;' }}</td>
-            </tr>
-            <tr>
-            <td class="white">↑</td>
-            <td class="white">{{ team1.Un|default_if_none:'&nbsp;' }}</td>
-            <td class="white">{{ team2.Un|default_if_none:'&nbsp;' }}</td>
-            <td class="white">{{ total1.Un|default_if_none:'&nbsp;' }}</td>
-            <td class="white">{{ total2.Un|default_if_none:'&nbsp;' }}</td>
-            </tr>
-            <tr>
-            <td class="white">☇</td>
-            <td class="white">{{ team1.Sl|default_if_none:'&nbsp;' }}</td>
-            <td class="white">{{ team2.Sl|default_if_none:'&nbsp;' }}</td>
-            <td class="white">{{ total1.Sl|default_if_none:'&nbsp;' }}</td>
-            <td class="white">{{ total2.Sl|default_if_none:'&nbsp;' }}</td>
-            </tr>
-            <tr>
-            <td class="white">4/5</td>
-            <td class="white">{{ team1.4_5|default_if_none:'&nbsp;' }}</td>
-            <td class="white">{{ team2.4_5|default_if_none:'&nbsp;' }}</td>
-            <td class="white">{{ total1.4_5|default_if_none:'&nbsp;' }}</td>
-            <td class="white">{{ total2.4_5|default_if_none:'&nbsp;' }}</td>
-            </tr>
-            <tr>
-            <td class="white">?</td>
-            <td class="white">{{ team1.wahl|default_if_none:'&nbsp;' }}</td>
-            <td class="white">{{ team2.wahl|default_if_none:'&nbsp;' }}</td>
-            <td class="white">{{ total1.wahl|default_if_none:'&nbsp;' }}</td>
-            <td class="white">{{ total2.wahl|default_if_none:'&nbsp;' }}</td>
-            </tr>
-            <tr>
-            <td class="white">3/3</td>
-            <td class="white">{{ team1.3_3|default_if_none:'&nbsp;' }}</td>
-            <td class="white">{{ team2.3_3|default_if_none:'&nbsp;' }}</td>
-            <td class="white">{{ total1.3_3|default_if_none:'&nbsp;' }}</td>
-            <td class="white">{{ total2.3_3|default_if_none:'&nbsp;' }}</td>
-            </tr>
-            <tr>
-            <td class="white">Ro</td>
-            <td class="white">{{ team1.Ro12|default_if_none:'&nbsp;' }}</td>
-            <td class="white">{{ team2.Ro12|default_if_none:'&nbsp;' }}</td>
-            <td class="white">{{ total1.Ro12|default_if_none:'&nbsp;' }}</td>
-            <td class="white">{{ total2.Ro12|default_if_none:'&nbsp;' }}</td>
-            </tr>
-            <tr>
         {% endfor %}
+        <tr>
         <td class="white">Ges</td>
             <td class="white"></td>
             <td class="white"></td>
             <td class="white">{{ number1 }}</td>
             <td class="white">{{ number2 }}</td>
-            </tr>
+        </tr>
     </table>
 
 {% endblock content %} 
