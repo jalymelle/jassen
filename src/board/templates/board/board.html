@@ -11,14 +11,12 @@
         <a href="{% url 'start' %}">Neues Spiel</a>
         <a href="{% url 'add' %}">Resultat Hinzufügen</a>
     </nav>
-
     <table>
         <th class="white"></th>
         <th class="white">{{team1.team_name}}</th>
         <th class="white">{{team2.team_name}}</th>
         <th class="white">Total 1</th>
         <th class="white">Total 2</th>
-        
         {% for row in data %}
             <tr>
             {% for i in row  %}
@@ -34,6 +32,5 @@
             <td class="white">{{ number2 }}</td>
         </tr>
     </table>
-
 {% endblock content %} 
 

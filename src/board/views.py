@@ -5,9 +5,8 @@ from .models import JassTeam, all_fields, codes
 from .forms import TeamForm, AddForm 
 
 # Create your views here.
-jassarten = ['Ei', 'Ro', 'Si', 'Se', 'Mi', 'Ob', 'Un', 'Sl', '4_5', 'wahl', '3_3', 'Ro12']
+jassarten = []
 total = [0, 0]
-number = [1]
 
 def start(request):
     if request.method == 'POST':
@@ -15,7 +14,10 @@ def start(request):
         if form.is_valid():
             name1 = form.cleaned_data.get('name1')
             name2 = form.cleaned_data.get('name2')
-            number[0] = form.cleaned_data.get('length')
+            number = form.cleaned_data.get('length')
+            for i in all_fields[0:number*12]:
+                jassarten.append(i)
+
             team1 = JassTeam.objects.get(qr=0)
             team2 = JassTeam.objects.get(qr=1)
             total[0], total[1] = 0, 0
@@ -28,7 +30,6 @@ def start(request):
                 for jassart in jassarten:
                     setattr(col, jassart, None)
                 col.save()
-            
             return HttpResponseRedirect(reverse('board'))
     
     else:
@@ -100,19 +101,16 @@ def update(team, field, points, match):
 
 def board(request):
     data = []
-    for field in all_fields:
+    for field in jassarten:
         data_row = []
         data_row.append(codes[field[:-2]] + ' ' + field[-1])
         for i in range(4):
             data_row.append(getattr(JassTeam.objects.get(qr=i), field))
         data.append(data_row)
 
-    print(data)
     context = {
         'team1': JassTeam.objects.get(qr=0),
         'team2': JassTeam.objects.get(qr=1),
-        'total1': JassTeam.objects.get(qr=2),
-        'total2': JassTeam.objects.get(qr=3),
         'number1': total[0],
         'number2': total[1],
         'data': data}
