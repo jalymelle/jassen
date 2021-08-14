@@ -2,11 +2,12 @@ from django.shortcuts import render
 from django.http import HttpResponseRedirect
 from django.urls import reverse
 from .models import JassTeam, all_fields, codes
-from .forms import TeamForm, AddForm 
+from .forms import TeamForm, AddForm1, AddForm2, AddForm3
 
 # Create your views here.
 jassarten = []
 total = [0, 0]
+number = [0]
 
 def start(request):
     if request.method == 'POST':
@@ -14,8 +15,8 @@ def start(request):
         if form.is_valid():
             name1 = form.cleaned_data.get('name1')
             name2 = form.cleaned_data.get('name2')
-            number = form.cleaned_data.get('length')
-            for i in all_fields[0:number*12]:
+            number[0] = form.cleaned_data.get('length')
+            for i in all_fields[0:number[0]*12]:
                 jassarten.append(i)
 
             team1 = JassTeam.objects.get(qr=0)
@@ -40,7 +41,12 @@ def start(request):
 
 def add(request):
     if request.method == 'POST':
-        form = AddForm(request.POST)
+        if number[0] == 1:
+            form = AddForm1(request.POST)
+        elif number[0] == 2:
+            form = AddForm2(request.POST)
+        else:
+            form = AddForm3(request.POST)
         if form.is_valid():
             team = JassTeam.objects.get(team_name=form.cleaned_data.get('team')) 
             field = form.cleaned_data.get('jass')
@@ -51,7 +57,12 @@ def add(request):
             return HttpResponseRedirect(reverse('board'))
     
     else:
-        form = AddForm()
+        if number[0] == 1:
+            form = AddForm1()
+        elif number[0] == 2:
+            form = AddForm2()
+        else:
+            form = AddForm3()
 
     return render(request, 'board/add.html', {'form': form})
 

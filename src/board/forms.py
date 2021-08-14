@@ -23,11 +23,27 @@ def update_AddForm():
 
 
 
-class AddForm(forms.Form):
+class AddForm1(forms.Form):
+    team = forms.ModelChoiceField(label='Team', queryset=JassTeam.objects.all())
+    jass = forms.CharField(label='Jass', widget=forms.Select(choices=jassarten[0:12]))
+    points = forms.IntegerField(label='Punkte', min_value=0, max_value=16)
+    match = forms.BooleanField(label='Match', required=False)
+
+
+class AddForm2(forms.Form):
+    team = forms.ModelChoiceField(label='Team', queryset=JassTeam.objects.all())
+    jass = forms.CharField(label='Jass', widget=forms.Select(choices=jassarten[0:24]))
+    points = forms.IntegerField(label='Punkte', min_value=0, max_value=16)
+    match = forms.BooleanField(label='Match', required=False)
+
+
+class AddForm3(forms.Form):
     team = forms.ModelChoiceField(label='Team', queryset=JassTeam.objects.all())
     jass = forms.CharField(label='Jass', widget=forms.Select(choices=jassarten))
     points = forms.IntegerField(label='Punkte', min_value=0, max_value=16)
     match = forms.BooleanField(label='Match', required=False)
+
+
     
 
 
