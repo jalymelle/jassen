@@ -16,8 +16,11 @@ def start(request):
             name1 = form.cleaned_data.get('name1')
             name2 = form.cleaned_data.get('name2')
             number[0] = form.cleaned_data.get('length')
-            for i in all_fields[0:number[0]*12]:
-                jassarten.append(i)
+            for i in all_fields:
+                if i in jassarten:
+                    jassarten.remove(i)
+            for j in all_fields[0:number[0]*12]:
+                jassarten.append(j)
 
             team1 = JassTeam.objects.get(qr=0)
             team2 = JassTeam.objects.get(qr=1)
@@ -111,6 +114,7 @@ def update(team, field, points, match):
     
 
 def board(request):
+    print(jassarten)
     data = []
     for field in jassarten:
         data_row = []
