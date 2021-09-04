@@ -8,8 +8,12 @@ class TeamForm(forms.Form):
 
 
 jassarten = []
-for jassart in all_fields:
+for jassart in all_fields[0:9]:
     option = (jassart, codes[jassart[:-2]] + ' ' + jassart[-1])
+    jassarten.append(option)
+
+for jassart in all_fields[9:]:
+    option = (jassart, codes[jassart[:-3]] + ' ' + jassart[-2:])
     jassarten.append(option)
         
 

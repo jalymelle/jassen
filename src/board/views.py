@@ -114,20 +114,34 @@ def update(team, field, points, match):
     
 
 def board(request):
-    print(jassarten)
     data = []
     for field in jassarten:
         data_row = []
-        data_row.append(codes[field[:-2]] + ' ' + field[-1])
+        if jassarten.index(field) < 9:
+            data_row.append(codes[field[:-2]] + ' ' + field[-1])
+        else: 
+            data_row.append(codes[field[:-3]] + ' ' + ' ' + field[-2:])
         for i in range(4):
             data_row.append(getattr(JassTeam.objects.get(qr=i), field))
         data.append(data_row)
+    
+    total_0 = 0
+    total_1 = 0
+    print(total[0], total[1])
+    
+    if total[0] > total[1]:
+        total_0 = total[0] - total[1]
+    
+    elif total[0] > total[1]:
+        total_1 = total[1] - total[0]
+    
 
+    # difference instead of two totals, finish button, continue button
     context = {
         'team1': JassTeam.objects.get(qr=0),
         'team2': JassTeam.objects.get(qr=1),
-        'number1': total[0],
-        'number2': total[1],
+        'number1': total_0,
+        'number2': total_1,
         'data': data}
         
     return render(request, 'board/board.html', context)

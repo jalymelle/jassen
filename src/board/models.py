@@ -25,7 +25,10 @@ codes = {
     'Ro12' : 'Ro*',
 }
 
-for i in range(1, 4):
-    for label in labels:
-        JassTeam.add_to_class(label + '_' + str(i), models.IntegerField(null=True, blank=True, default=None))
-        all_fields.append(label + '_' + str(i))
+# times number
+j = 0
+
+for label in labels*3:
+    j += 1
+    JassTeam.add_to_class(label + '_' + str(j), models.IntegerField(null=True, blank=True, default=None))
+    all_fields.append(label + '_' + str(j))
