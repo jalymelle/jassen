@@ -8,7 +8,7 @@
 
 {% block content %}
     <nav class="navbar">
-        <a href="{% url 'start' %}">Neues Spiel</a>
+        <a href="{% url 'end' %}">Spiel Beenden</a>
         <a href="{% url 'add' %}">Resultat Hinzufügen</a>
     </nav>
     <table>
@@ -32,5 +32,6 @@
             <td class="white">{{ number2 }}</td>
         </tr>
     </table>
+    <h2 class="message">Bitte auf Handy wechseln</h2>
 {% endblock content %} 
 

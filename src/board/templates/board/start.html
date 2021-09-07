@@ -3,14 +3,14 @@
 
 {% block title %} 
 <link rel="stylesheet" href="{% static 'board/bse.css' %}">
-<title>Start</title>
+<title>Neues Spiel</title>
 {% endblock title %}
 
 {% block content %}
     <nav class="navbar">
         <h1>Neues Spiel</h1>
     </nav>
-    <form action="{% url 'start' %}" method="post">
+    <form action="{% url 'board' slot  %}" method="post">
         {% csrf_token %}
         {{ form }}
         <input class="button" type="submit" value="Starten">

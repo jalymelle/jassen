@@ -1,0 +1,20 @@
+{% extends 'board/base.html' %}
+{% load static %}
+
+{% block title %} 
+<link rel="stylesheet" href="{% static 'board/base.css' %}">
+<title>Menu</title>
+{% endblock title %}
+
+{% block content %}
+    <nav class="navbar">
+        <h1>Menu</h1>
+    </nav>
+    <div class="div">
+    <a href="{% url 'board' 1 %}">{{board_0}}</a>
+    <a href="{% url 'board' 1 %}">{{board_1}}</a>
+    <a href="{% url 'board' 2 %}">{{board_3}}</a>
+    <a href="{% url 'board' 3 %}">{{board_3}}</a>
+    </div>
+    <h2 class="message">Bitte auf Handy wechseln</h2>
+{% endblock content %}

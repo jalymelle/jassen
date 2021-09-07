@@ -66,8 +66,8 @@ form {
 .div{
     display: flex;
     flex-direction: column;
-    justify-content: center;
     align-content: stretch;
+    text-align: center;
 }
 
 .button {
