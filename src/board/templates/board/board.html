@@ -2,14 +2,14 @@
 {% load static %}
 
 {% block title %} 
-<link rel="stylesheet" href="{% static 'board/bse.css' %}">
+<link rel="stylesheet" href="{% static 'board/base.css' %}">
 <title>Resultate</title>
 {% endblock title %}
 
 {% block content %}
     <nav class="navbar">
-        <a href="{% url 'end' %}">Spiel Beenden</a>
-        <a href="{% url 'add' %}">Resultat Hinzufügen</a>
+        <a href="{% url 'end' slot %}">Spiel Beenden</a>
+        <a href="{% url 'add' slot %}">Resultat Hinzufügen</a>
     </nav>
     <table>
         <th class="white"></th>

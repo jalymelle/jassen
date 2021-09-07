@@ -2,16 +2,16 @@
 {% load static %}
 
 {% block title %} 
-<link rel="stylesheet" href="{% static 'board/bse.css' %}">
+<link rel="stylesheet" href="{% static 'board/base.css' %}">
 <title>Resultat Hinzufügen</title>
 {% endblock title %}
 
 {% block content %}
     <section class="section_1">
     <nav class="navbar">
-        <a href="{% url 'board' %}">Zurück</a>
+        <a href="{% url 'board' slot %}">Zurück</a>
     </nav>
-    <form action="{% url 'add' %}" method="post">
+    <form action="{% url 'add' slot %}" method="POST">
         {% csrf_token %}
         {{ form }}
         <input class="button" type="submit" value="Speichern">

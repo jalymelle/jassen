@@ -95,6 +95,6 @@ form {
 
 @media screen and (min-width: 479px){
     *{background-image: none;}
-    .button, form, nav, table {visibility: hidden;}
+    .button, form, nav, table, a {visibility: hidden;}
     .message{visibility: visible;}
 }

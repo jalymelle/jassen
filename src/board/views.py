@@ -20,7 +20,6 @@ def menu(request):
             context[board_names[i]] = team_name
         else:
             context[board_names[i]] = 'Leer'
-    print(context)
 
     return render(request, 'board/menu.html', context)
 
@@ -32,7 +31,7 @@ def start(request, slot):
             name1 = form.cleaned_data.get('name1')
             name2 = form.cleaned_data.get('name2')
             number[slot] = form.cleaned_data.get('length')
-            for j in all_fields[0:number[0]*12]:
+            for j in all_fields[0:number[slot]*12]:
                 jassarten[slot].append(j)
 
             team1 = JassTeam.objects.get(qr=4*slot + 1)
@@ -42,6 +41,7 @@ def start(request, slot):
             team1.save()
             setattr(team2, 'team_name', name2)
             team2.save()
+            print(jassarten)
             for q in range (4):
                 col = JassTeam.objects.get(qr=4*slot + 1 + q)
                 for jassart in jassarten[slot]:
@@ -56,13 +56,12 @@ def start(request, slot):
 
 
 def end(request, slot):
-    for i in jassarten[slot]:
-        jassarten.remove(i)
+    jassarten[slot] = []
     
-    return render(request, 'board/menu.html', {})
+    return HttpResponseRedirect(reverse('menu'))
 
 
-def add(request):
+def add(request, slot):
     if request.method == 'POST':
         if number[0] == 1:
             form = AddForm1(request.POST)
@@ -77,7 +76,7 @@ def add(request):
             match = form.cleaned_data.get('match')
             update(team, field, points, match)
 
-            return HttpResponseRedirect(reverse('board'))
+            return HttpResponseRedirect(reverse('board', kwargs={'slot': slot}))
     
     else:
         if number[0] == 1:
@@ -87,44 +86,44 @@ def add(request):
         else:
             form = AddForm3()
 
-    return render(request, 'board/add.html', {'form': form})
+    return render(request, 'board/add.html', {'form': form, 'slot': slot})
     
 
 def board(request, slot):
-    print('here')
-    data = []
     if len(jassarten[slot]) == 0:
         return HttpResponseRedirect(reverse('start', kwargs={'slot': slot}))
-    else: 
-        for field in jassarten[slot]:
-            data_row = []
-            if jassarten[slot].index(field) < 9:
-                data_row.append(codes[field[:-2]] + ' ' + field[-1])
-            else: 
-                data_row.append(codes[field[:-3]] + ' ' + ' ' + field[-2:])
-            for i in range(4):
-                data_row.append(getattr(JassTeam.objects.get(qr= 4 * slot + i), field))
-            data.append(data_row)
-        
-        total_0 = 0
-        total_1 = 0
-        
-        if total[0] > total[1]:
-            total_0 = total[0] - total[1]
-    
-        elif total[0] > total[1]:
-            total_1 = total[1] - total[0]
-        
 
-        # difference instead of two totals, finish button, continue button
-        context = {
-            'team1': JassTeam.objects.get(qr= 4 * slot + 1),
-            'team2': JassTeam.objects.get(qr= 4 * slot + 2),
-            'number1': total_0,
-            'number2': total_1,
-            'data': data}
+    data = []
+    for field in jassarten[slot]:
+        data_row = []
+        if jassarten[slot].index(field) < 9:
+            data_row.append(codes[field[:-2]] + ' ' + field[-1])
+        else: 
+            data_row.append(codes[field[:-3]] + ' ' + ' ' + field[-2:])
+        for i in range(4):
+            data_row.append(getattr(JassTeam.objects.get(qr= 4 * slot + 1 + i), field))
+        data.append(data_row)
+    
+    total_0 = 0
+    total_1 = 0
+    
+    if total[0] > total[1]:
+        total_0 = total[0] - total[1]
+
+    elif total[0] > total[1]:
+        total_1 = total[1] - total[0]
+    
+
+    # difference instead of two totals, finish button, continue button
+    context = {
+        'team1': JassTeam.objects.get(qr= 4 * slot + 1),
+        'team2': JassTeam.objects.get(qr= 4 * slot + 2),
+        'number1': total_0,
+        'number2': total_1,
+        'data': data,
+        'slot': slot}
             
-        return render(request, 'board/board.html', context)
+    return render(request, 'board/board.html', context)
 
 
 def update(team, field, points, match):

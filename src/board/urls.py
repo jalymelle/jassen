@@ -6,6 +6,6 @@ urlpatterns = [
     path('', menu, name='menu'),
     path('start/<int:slot>', start, name='start'),
     path('board/<int:slot>', board, name='board'),
-    path('add/', add, name='add'),
-    path('end/', end, name='end')
+    path('add/<int:slot>', add, name='add'),
+    path('end/<int:slot>', end, name='end')
 ]

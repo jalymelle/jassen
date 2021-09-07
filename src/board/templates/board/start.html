@@ -2,7 +2,7 @@
 {% load static %}
 
 {% block title %} 
-<link rel="stylesheet" href="{% static 'board/bse.css' %}">
+<link rel="stylesheet" href="{% static 'board/base.css' %}">
 <title>Neues Spiel</title>
 {% endblock title %}
 
@@ -10,7 +10,7 @@
     <nav class="navbar">
         <h1>Neues Spiel</h1>
     </nav>
-    <form action="{% url 'board' slot  %}" method="post">
+    <form action="{% url 'start' slot %}" method="POST">
         {% csrf_token %}
         {{ form }}
         <input class="button" type="submit" value="Starten">
