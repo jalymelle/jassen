@@ -1,5 +1,5 @@
 from django import forms
-from .models import JassTeam, all_fields, codes
+from .models import JassTeam
 
 
 class TeamForm(forms.Form):
@@ -9,41 +9,22 @@ class TeamForm(forms.Form):
 
 
 jassarten = []
-for jassart in all_fields[0:9]:
-    option = (jassart, codes[jassart[:-2]] + ' ' + jassart[-1])
-    jassarten.append(option)
-
-for jassart in all_fields[9:]:
-    option = (jassart, codes[jassart[:-3]] + ' ' + jassart[-2:])
-    jassarten.append(option)
-        
-
-teams = []
-
-def update_AddForm():
-    team1 = JassTeam.objects.get(qr=0)
-    team2 = JassTeam.objects.get(qr=1)
-    teams.append((team1.team_name, team1.team_name))
-    teams.append((team2.team_name, team2.team_name))
 
 
+class AddForm(forms.Form):
+    def __init__(self, *args, **kwargs):
+        self.qr1 = kwargs.pop('qr1')
+        self.qr2 = kwargs.pop('qr2')
+        self.jasse = kwargs.pop('jasse')
+        super(AddForm, self).__init__(*args, **kwargs)
+        self.fields['team'].queryset =  JassTeam.objects.filter(qr=self.qr1) | JassTeam.objects.filter(qr=self.qr2)
+        self.fields['jass'].widget = forms.Select(choices=self.jasse)
 
-class AddForm1(forms.Form):
-    team = forms.ModelChoiceField(label='Team', queryset=JassTeam.objects.all())
-    jass = forms.CharField(label='Jass', widget=forms.Select(choices=jassarten[0:12]))
-    points = forms.IntegerField(label='Punkte', min_value=0, max_value=16)
-    match = forms.BooleanField(label='Match', required=False)
-
-
-class AddForm2(forms.Form):
-    team = forms.ModelChoiceField(label='Team', queryset=JassTeam.objects.all())
-    jass = forms.CharField(label='Jass', widget=forms.Select(choices=jassarten[0:24]))
-    points = forms.IntegerField(label='Punkte', min_value=0, max_value=16)
-    match = forms.BooleanField(label='Match', required=False)
-
-
-class AddForm3(forms.Form):
-    team = forms.ModelChoiceField(label='Team', queryset=JassTeam.objects.all())
+    class Meta:
+        model = JassTeam
+        fields = ['team', 'jass', 'points', 'macht']
+    
+    team = forms.ModelChoiceField(label='Team', queryset=None)
     jass = forms.CharField(label='Jass', widget=forms.Select(choices=jassarten))
     points = forms.IntegerField(label='Punkte', min_value=0, max_value=16)
     match = forms.BooleanField(label='Match', required=False)

@@ -2,7 +2,7 @@ from django.shortcuts import render
 from django.http import HttpResponseRedirect
 from django.urls import reverse
 from .models import JassTeam, all_fields, codes
-from .forms import TeamForm, AddForm1, AddForm2, AddForm3
+from .forms import TeamForm, AddForm
 
 # Create your views here.
 jassarten = [[], [], [], []]
@@ -41,7 +41,6 @@ def start(request, slot):
             team1.save()
             setattr(team2, 'team_name', name2)
             team2.save()
-            print(jassarten)
             for q in range (4):
                 col = JassTeam.objects.get(qr=4*slot + 1 + q)
                 for jassart in jassarten[slot]:
@@ -63,30 +62,29 @@ def end(request, slot):
 
 def add(request, slot):
     if request.method == 'POST':
-        if number[0] == 1:
-            form = AddForm1(request.POST)
-        elif number[0] == 2:
-            form = AddForm2(request.POST)
-        else:
-            form = AddForm3(request.POST)
+        form = AddForm(request.POST)
         if form.is_valid():
-            team = JassTeam.objects.get(team_name=form.cleaned_data.get('team')) 
+            team = form.cleaned_data.get('team')
             field = form.cleaned_data.get('jass')
             points = form.cleaned_data.get('points')
             match = form.cleaned_data.get('match')
-            update(team, field, points, match)
+            update(team, field, points, match, slot)
 
             return HttpResponseRedirect(reverse('board', kwargs={'slot': slot}))
     
     else:
-        if number[0] == 1:
-            form = AddForm1()
-        elif number[0] == 2:
-            form = AddForm2()
-        else:
-            form = AddForm3()
+        jasse = []
+        for jassart in jassarten[slot]:
+            if jassarten[slot].index(jassart) < 9:
+                jasse.append((jassart, codes[jassart[:-2]] + ' ' + jassart[-1]))
+            else: 
+                jasse.append((jassart, codes[jassart[:-3]] + ' ' + jassart[-2:]))
+            
+        form = AddForm(qr1=4 * slot + 1, qr2=4 * slot + 2, jasse=jasse)
 
-    return render(request, 'board/add.html', {'form': form, 'slot': slot})
+
+    context = {'form': form, 'slot': slot}
+    return render(request, 'board/add.html', context)
     
 
 def board(request, slot):
@@ -107,14 +105,13 @@ def board(request, slot):
     total_0 = 0
     total_1 = 0
     
-    if total[0] > total[1]:
-        total_0 = total[0] - total[1]
+    if total[slot][0] > total[slot][1]:
+        total_0 = total[slot][0] - total[slot][1]
 
-    elif total[0] > total[1]:
-        total_1 = total[1] - total[0]
+    elif total[slot][0] > total[slot][1]:
+        total_1 = total[slot][1] - total[slot][0]
     
 
-    # difference instead of two totals, finish button, continue button
     context = {
         'team1': JassTeam.objects.get(qr= 4 * slot + 1),
         'team2': JassTeam.objects.get(qr= 4 * slot + 2),
@@ -126,43 +123,44 @@ def board(request, slot):
     return render(request, 'board/board.html', context)
 
 
-def update(team, field, points, match):
+def update(team, field, points, match, slot):
     if match: 
         setattr(team, field, 17)
     else:
         setattr(team, field, points)
     team.save()
 
+
     field_object = JassTeam._meta.get_field(field)
-    value1 = field_object.value_from_object(JassTeam.objects.get(qr=0))
-    value2 = field_object.value_from_object(JassTeam.objects.get(qr=1))
-    total1 = JassTeam.objects.get(qr=2)
-    total2 = JassTeam.objects.get(qr=3)
+    value1 = field_object.value_from_object(JassTeam.objects.get(qr=4* slot + 1))
+    value2 = field_object.value_from_object(JassTeam.objects.get(qr=4* slot + 2))
+    total1 = JassTeam.objects.get(qr=4* slot + 3)
+    total2 = JassTeam.objects.get(qr=4* slot + 4)
     if type(value1) == int and type(value2) == int:
         if value1 > value2:
             if value1 == 17:
-                setattr(total1, field, (16-value2) * (jassarten.index(field) +1) + 20)
+                setattr(total1, field, (16-value2) * (jassarten[slot].index(field) +1) + 20)
             else:
-                setattr(total1, field, (value1-value2) * (jassarten.index(field) +1) + 10)
+                setattr(total1, field, (value1-value2) * (jassarten[slot].index(field) +1) + 10)
             setattr(total2, field, None)
         elif value2 > value1:
             if value2 == 17:
-                setattr(total2, field, (16-value1) * (jassarten.index(field) +1) + 20)
+                setattr(total2, field, (16-value1) * (jassarten[slot].index(field) +1) + 20)
             else:
-                setattr(total2, field, (value2-value1) * (jassarten.index(field) +1) + 10)
+                setattr(total2, field, (value2-value1) * (jassarten[slot].index(field) +1) + 10)
             setattr(total1, field, None)
         
         else:
             setattr(total1, field, None)
             setattr(total2, field, None)
-
         total1.save()
         total2.save()
-        total[0], total[1] = 0, 0
-        for jassart in jassarten:
+        total[slot][0], total[slot][1] = 0, 0
+        for jassart in jassarten[slot]:
             t1 = getattr(total1, jassart)
             t2 = getattr(total2, jassart)
             if t1 != None:
-                total[0] += t1
+                total[slot][0] += t1
             if t2 != None:
-                total[1] += t2
+                total[slot][1] += t2
+        
