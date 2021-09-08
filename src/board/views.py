@@ -62,7 +62,7 @@ def end(request, slot):
 
 def add(request, slot):
     if request.method == 'POST':
-        form = AddForm(request.POST)
+        form = AddForm(request.POST, qr1=4 * slot + 1, qr2=4 * slot + 2, jasse=[])
         if form.is_valid():
             team = form.cleaned_data.get('team')
             field = form.cleaned_data.get('jass')
