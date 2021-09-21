@@ -102,21 +102,25 @@ def board(request, slot):
             data_row.append(getattr(JassTeam.objects.get(qr= 4 * slot + 1 + i), field))
         data.append(data_row)
     
-    total_0 = 0
-    total_1 = 0
     
     if total[slot][0] > total[slot][1]:
-        total_0 = total[slot][0] - total[slot][1]
+        total[slot][0] = total[slot][0] - total[slot][1]
+        total[slot][1] = 0
 
-    elif total[slot][0] > total[slot][1]:
-        total_1 = total[slot][1] - total[slot][0]
+    elif total[slot][0] < total[slot][1]:
+        total[slot][1] = total[slot][1] - total[slot][0]
+        total[slot][0] = 0
+    
+    else:
+        total[slot][0] = 0
+        total[slot][1] = 0
     
 
     context = {
         'team1': JassTeam.objects.get(qr= 4 * slot + 1),
         'team2': JassTeam.objects.get(qr= 4 * slot + 2),
-        'number1': total_0,
-        'number2': total_1,
+        'number1': total[slot][0],
+        'number2': total[slot][1],
         'data': data,
         'slot': slot}
             
