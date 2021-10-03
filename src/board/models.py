@@ -2,7 +2,7 @@ from django.db import models
 
 # Create your models here.
 class JassTeam(models.Model):
-    team_name = models.CharField(max_length=20, null=False)
+    team_name = models.CharField(max_length=8, null=False)
     qr = models.IntegerField(null=False, unique=True)
 
     def __str__(self):
