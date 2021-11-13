@@ -9,5 +9,5 @@ urlpatterns = [
     path('add/<int:slot>', add, name='add'),
     path('end/<int:slot>', end, name='end'),
     path('reset/<int:slot>', reset, name='reset'),
-    path('rewrite/<int:slot>', rewrite, name='rewrite')
+    path('rewrite/<int:slot><bool:slot>', rewrite, name='rewrite')
 ]
