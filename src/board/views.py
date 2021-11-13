@@ -55,8 +55,11 @@ def start(request, slot):
 
 
 def end(request, slot):
+    return render(request, 'board/end.html', {'slot':slot})
+
+
+def reset(request, slot):
     jassarten[slot] = []
-    
     return HttpResponseRedirect(reverse('menu'))
 
 
@@ -68,9 +71,9 @@ def add(request, slot):
             field = form.cleaned_data.get('jass')
             points = form.cleaned_data.get('points')
             match = form.cleaned_data.get('match')
-            update(team, field, points, match, slot)
-
-            return HttpResponseRedirect(reverse('board', kwargs={'slot': slot}))
+            if getattr(team, field, points) is not None:
+                update(team, field, points, match, slot)
+                return HttpResponseRedirect(reverse('board', kwargs={'slot': slot}))
     
     else:
         jasse = []
@@ -85,7 +88,12 @@ def add(request, slot):
 
     context = {'form': form, 'slot': slot}
     return render(request, 'board/add.html', context)
-    
+
+
+def rewrite(request, slot):
+    return render(request, 'rewrite/end.html', {'slot':slot})
+
+
 
 def board(request, slot):
     if len(jassarten[slot]) == 0:
@@ -128,6 +136,7 @@ def board(request, slot):
 
 
 def update(team, field, points, match, slot):
+    previous = getattr(team, field, points)
     if match: 
         setattr(team, field, 17)
     else:
@@ -167,4 +176,6 @@ def update(team, field, points, match, slot):
                 total[slot][0] += t1
             if t2 != None:
                 total[slot][1] += t2
+    
+    return previous
         

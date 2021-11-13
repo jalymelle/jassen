@@ -1,0 +1,15 @@
+{% extends 'board/base.html' %}
+{% load static %}
+
+{% block title %} 
+<link rel="stylesheet" href="{% static 'board/base.css' %}">
+<title>Beenden</title>
+{% endblock title %}
+
+{% block content %}
+    <section class="section_2">
+    <a href="{% url 'board' slot %}">Nein, Zurück</a>
+    <a class="red" href="{% url 'reset' slot %}">Ja, Beenden</a>
+    </section>
+    <h2 class="message">Bitte auf Handy wechseln</h2>
+{% endblock content %} 
