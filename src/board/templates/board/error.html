@@ -8,8 +8,9 @@
 
 {% block content %}
     <section class="section_2">
-    <a href="{% url 'add' slot %}">Nein, Zurück</a>
-    <a class="red" href="{% url 'board' slot second%}">Ja, Beenden</a>
+        <h2>Fehlermeldung</h2>
+        <p>{{ text }}</p>
+    <a href="{% url 'board' slot %}">Okay</a>
     </section>
     <h2 class="message">Bitte auf Handy wechseln</h2>
 {% endblock content %} 

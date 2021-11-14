@@ -1,4 +1,4 @@
-from .views import add, board, menu, start, end, reset, rewrite
+from .views import add, board, menu, start, end, reset, error
 from django.urls import path
 
 
@@ -9,5 +9,5 @@ urlpatterns = [
     path('add/<int:slot>', add, name='add'),
     path('end/<int:slot>', end, name='end'),
     path('reset/<int:slot>', reset, name='reset'),
-    path('rewrite/<int:slot><bool:slot>', rewrite, name='rewrite')
+    path('error/<int:slot>/<str:message>', error, name='error')
 ]

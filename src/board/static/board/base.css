@@ -35,44 +35,6 @@ a{
     text-decoration: none;
     margin: 20px;
 }
-
-* {
-    margin: 0;
-    box-sizing: border-box;
-    padding-top: 5px;
-    font-family: Arial, Helvetica, sans-serif;
-}
-body {
-    margin: 20px 25px 50px;
-    background-image: url(back.jpg);
-    background-position: 53% 50%;
-    background-size: cover;
-    background-repeat: repeat;
-    background-attachment: fixed;
-}
-
-text {
-    display: flex;
-    justify-content: stretch;
-    align-items: center;
-    color: #fff;
-    font-weight: 700;
-}
-
-nav{
-    display: flex;
-    flex-direction: row;
-    justify-content: space-around;
-}
-
-
-a{
-    background-color: rgb(71, 202, 115);
-    border-radius: 4px;
-    padding: 5px;
-    text-decoration: none;
-    margin: 20px;
-}
 h1, label, a {
     color: #fff;
 }
@@ -150,4 +112,19 @@ form {
     display: flex;
     flex-direction: column;
     text-align: center;
+}
+
+p{
+    color: white;
+    padding: 10px;
+}
+
+h2{
+    color: white;
+}
+
+
+input[type="checkbox"] {
+    width: 20px;
+    height: 20px
 }

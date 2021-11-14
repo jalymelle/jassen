@@ -8,6 +8,7 @@ from .forms import TeamForm, AddForm
 jassarten = [[], [], [], []]
 total = [[0, 0], [0, 0], [0, 0], [0, 0]]
 number = [0, 0, 0, 0]
+to_update = [[], [], [], []]
 
 
 def menu(request):
@@ -63,6 +64,10 @@ def reset(request, slot):
     return HttpResponseRedirect(reverse('menu'))
 
 
+def error(request, slot, message):
+    return render(request, 'board/error.html', {'slot': slot, 'text': message})
+
+
 def add(request, slot):
     if request.method == 'POST':
         form = AddForm(request.POST, qr1=4 * slot + 1, qr2=4 * slot + 2, jasse=[])
@@ -71,8 +76,23 @@ def add(request, slot):
             field = form.cleaned_data.get('jass')
             points = form.cleaned_data.get('points')
             match = form.cleaned_data.get('match')
-            if getattr(team, field, points) is not None:
-                update(team, field, points, match, slot)
+            leer = form.cleaned_data.get('leer')
+            correct = form.cleaned_data.get('correct')
+
+            if leer and match:
+                message = 'Match und Leer wurden gleichzeitig gewählt.'
+                return HttpResponseRedirect(reverse('error', kwargs={'slot': slot, 'message': message}))
+
+            elif not match and not leer and points is None:
+                message = 'Bitte eine Punktzahl angeben.'
+                return HttpResponseRedirect(reverse('error', kwargs={'slot': slot, 'message': message}))
+
+            elif getattr(team, field, points) is not None and not correct:
+                message = 'In diesem Feld wurde bereits ein Result eingetragen. Falls es überschrieben werden soll, bitte Überschreiben anklicken.'
+                return HttpResponseRedirect(reverse('error', kwargs={'slot': slot, 'message': message}))
+                
+            else:
+                update(slot, team, field, points, match, leer)
                 return HttpResponseRedirect(reverse('board', kwargs={'slot': slot}))
     
     else:
@@ -88,11 +108,6 @@ def add(request, slot):
 
     context = {'form': form, 'slot': slot}
     return render(request, 'board/add.html', context)
-
-
-def rewrite(request, slot):
-    return render(request, 'rewrite/end.html', {'slot':slot})
-
 
 
 def board(request, slot):
@@ -135,10 +150,11 @@ def board(request, slot):
     return render(request, 'board/board.html', context)
 
 
-def update(team, field, points, match, slot):
-    previous = getattr(team, field, points)
+def update(slot, team, field, points, match, leer):
     if match: 
         setattr(team, field, 17)
+    elif leer:
+        setattr(team, field, None)
     else:
         setattr(team, field, points)
     team.save()
@@ -176,6 +192,5 @@ def update(team, field, points, match, slot):
                 total[slot][0] += t1
             if t2 != None:
                 total[slot][1] += t2
-    
-    return previous
+
         

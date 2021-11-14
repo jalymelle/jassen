@@ -22,12 +22,14 @@ class AddForm(forms.Form):
 
     class Meta:
         model = JassTeam
-        fields = ['team', 'jass', 'points', 'macht']
+        fields = ['team', 'jass', 'points', 'match', 'leer', 'correct']
     
     team = forms.ModelChoiceField(label='Team', queryset=None)
     jass = forms.CharField(label='Jass', widget=forms.Select(choices=jassarten))
-    points = forms.IntegerField(label='Punkte', min_value=0, max_value=16)
+    points = forms.IntegerField(label='Punkte', min_value=0, max_value=16, required=False)
     match = forms.BooleanField(label='Match', required=False)
+    leer = forms.BooleanField(label='Leer', required=False)
+    correct = forms.BooleanField(label='Überschreiben', required=False)
 
 
     
